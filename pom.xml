@@ -7,7 +7,7 @@
 	<artifactId>foodshop</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
-
+    <!--测试测试-->
 	<name>foodshop</name>
 	<description>Demo project for Spring Boot</description>
 
