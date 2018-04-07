@@ -22,13 +22,20 @@ public class CategoryDaoTest {
        System.out.println(foodCategory.toString());
 
     }
-@Test
+    @Test
     public  void saveTest(){
         FoodCategory fc=new FoodCategory();
         fc.setCname("fruit");
-        fc.setCid(2);
+       fc.setCtype(3);
         categorydao.save(fc);
 
 }
-
+    @Test
+    public  void updateTest() {
+        FoodCategory fc = new FoodCategory();
+        fc.setCid(2);
+        fc.setCname("更新了");
+        fc.setCtype(3);
+        categorydao.save(fc);
+    }
 }
