@@ -1,13 +1,14 @@
-package com.ranchel.foodshop.service;
+package com.ranchel.foodshop.service.impl;
 
 import com.ranchel.foodshop.dao.CategoryDao;
 import com.ranchel.foodshop.dateobject.FoodCategory;
+import com.ranchel.foodshop.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-public class CategoryServiceImpl implements CategoryService{
+public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryDao cd;
     @Override

@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public   interface CategoryDao extends JpaRepository<FoodCategory,Integer>{
-    List<FoodCategory> findByCidIn(List<Integer> cidList);
+   List<FoodCategory> findByCtypeIn(List<Integer> ctypeList);
 }

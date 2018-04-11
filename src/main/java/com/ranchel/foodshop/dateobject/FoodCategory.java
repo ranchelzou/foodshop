@@ -1,8 +1,12 @@
 package com.ranchel.foodshop.dateobject;
 
+import lombok.Data;
+import org.hibernate.annotations.DynamicUpdate;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.util.Date;
 
 /**
  * 类目
@@ -10,40 +14,25 @@ import javax.persistence.Id;
  */
 
 @Entity
+@DynamicUpdate
+@Data
+
 public class FoodCategory {
-    /**主键自增*/
+    /**
+     * 主键自增
+     */
     @Id
     @GeneratedValue
     private Integer cid;
 
     private String cname;
-    private String ctype;
-    //ccreatetime;
-    //cupdatetime;
+    private Integer ctype;
 
-
-    public Integer getCid() {
-        return cid;
+    public FoodCategory() {
     }
 
-    public void setCid(Integer cid) {
-        this.cid = cid;
-    }
-
-
-
-    public void setCname(String cname) {
+    public FoodCategory(String cname, Integer ctype) {
         this.cname = cname;
-    }
-
-    public String getCname() {
-        return cname;
-    }
-    @Override
-    public String toString() {
-        return "food_category{" +
-                "cid='" + cid + '\'' +
-                ", cname='" + cname + '\'' +
-                '}';
+        this.ctype = ctype;
     }
 }

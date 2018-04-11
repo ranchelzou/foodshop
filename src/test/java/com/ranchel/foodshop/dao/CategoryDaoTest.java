@@ -1,11 +1,17 @@
 package com.ranchel.foodshop.dao;
 
 import com.ranchel.foodshop.dateobject.FoodCategory;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
+
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @RunWith is annotation -single model to test
@@ -31,11 +37,17 @@ public class CategoryDaoTest {
 
 }
     @Test
+    @Transactional
     public  void updateTest() {
-        FoodCategory fc = new FoodCategory();
-        fc.setCid(2);
-        fc.setCname("更新了");
-        fc.setCtype(3);
-        categorydao.save(fc);
+        FoodCategory fc = new FoodCategory("我的最爱",6);
+        FoodCategory result=categorydao.save(fc);
+        Assert.assertNotNull(result);
+    }
+    @Test
+   public  void findByCtypeInTest(){
+        List<Integer> list= Arrays.asList(2,4,5);
+       List<FoodCategory> result=categorydao.findByCtypeIn(list);
+        Assert.assertNotEquals(0,result.size());
+
     }
 }

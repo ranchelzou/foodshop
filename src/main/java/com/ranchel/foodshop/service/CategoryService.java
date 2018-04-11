@@ -1,18 +1,21 @@
 package com.ranchel.foodshop.service;
 
-import com.ranchel.foodshop.dao.CategoryDao;
 import com.ranchel.foodshop.dateobject.FoodCategory;
-import org.hibernate.annotations.ListIndexBase;
-
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
-import java.util.Locale;
 
 /**
- * service CategorySeervice
+ * service CategoryService
  */
 public interface CategoryService {
+    /*查询一个
+    *
+     */
     FoodCategory findOne(Integer cid);
+    /*查询所有
+     *List
+     */
     List<FoodCategory> findAll();
-    List<FoodCategory> findByCategoryTypeIn(List<Integer> cidList);
+    List<FoodCategory> findByCtypeIn(List<Integer> ctypeList);
+
+    FoodCategory save(FoodCategory fc);
 }
