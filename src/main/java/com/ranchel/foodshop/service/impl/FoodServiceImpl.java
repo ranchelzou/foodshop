@@ -25,6 +25,9 @@ public class FoodServiceImpl implements FoodService {
         return fiDao.findAll(pageable);
     }
 
+   @Override
+    public List<FoodInfo> findWhole() { return fiDao.findAll(); }
+
     @Override
     public List<FoodInfo> findByCtypeIn(Integer ctype) {
         return fiDao.findByCtypeIn(ctype);

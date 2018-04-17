@@ -36,6 +36,7 @@ public class FoodServiceImplTest {
         List<FoodInfo>fi=foodService.findByCtypeIn(2);
     }
 
+
     @Test
     public void save() {
         FoodInfo fi=new FoodInfo();

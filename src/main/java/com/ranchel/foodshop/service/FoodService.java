@@ -9,6 +9,7 @@ import java.util.List;
 public interface FoodService {
     FoodInfo  findOne(String fid);
     Page<FoodInfo> findAll(Pageable pageable);
+    List<FoodInfo> findWhole();
     List<FoodInfo> findByCtypeIn(Integer ctype);
     FoodInfo save(FoodInfo fi);
 
