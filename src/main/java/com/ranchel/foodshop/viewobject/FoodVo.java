@@ -9,12 +9,12 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class FoodVo<T> {
+public class FoodVo {
     @JsonProperty("name")
     private String cname;
     @JsonProperty("type")
     private Integer ctype;
 
     @JsonProperty("foods")
-    private List<T> foodInfoVoList;
+    private List<FoodInfoVo> foodInfoVoList;
 }
