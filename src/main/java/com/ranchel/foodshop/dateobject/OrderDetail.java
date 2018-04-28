@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
@@ -14,9 +15,9 @@ public class OrderDetail {
     private String oid;
     private String fid;
     private String fname;
-    private String fprice;
+    private BigDecimal fprice;
     /**商品数量*/
-    private String fquantity;
+    private Integer fquantity;
     private String fimage;
     //private Date dcreatetime;
 
