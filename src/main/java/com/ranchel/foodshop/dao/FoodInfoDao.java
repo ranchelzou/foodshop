@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface FoodInfoDao extends JpaRepository<FoodInfo,String> {
     List<FoodInfo> findByCtypeIn(Integer ctype);
+    /**查询所有，是否需要分页*/
 //    List<FoodInfo> findWhole();
 
 }

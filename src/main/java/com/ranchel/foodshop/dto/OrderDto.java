@@ -1,20 +1,15 @@
-package com.ranchel.foodshop.dateobject;
+package com.ranchel.foodshop.dto;
 
-import com.ranchel.foodshop.enums.OrderStatusEnum;
-import com.ranchel.foodshop.enums.OrderPayStatusEnum;
+import com.ranchel.foodshop.dateobject.OrderDetail;
 import lombok.Data;
-import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
-@Entity
 @Data
-@DynamicUpdate
-public class OrderMaster {
-    @Id
+public class OrderDto {
     private String oid;
     /**买家名字*/
     private String bname;
@@ -27,13 +22,13 @@ public class OrderMaster {
     /**数量*/
     private BigDecimal oamount;
     /**订单状态0新下单*/
-    private Integer ostatus=OrderStatusEnum.NEW.getCode();
+    private Integer ostatus;
     /**0默认为支付*/
-    private Integer pstatus=OrderPayStatusEnum.WAIT.getCode();
+    private Integer pstatus;
     /**创建时间*/
     private Date ocreatetime;
     /**更新时间*/
     private Date oupdatetime;
-
-
+    @Transient
+  List<OrderDetail> orderDetailsList;
 }
