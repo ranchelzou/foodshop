@@ -1,5 +1,6 @@
 package com.ranchel.foodshop.service.impl;
 
+import com.ranchel.foodshop.converter.OrderMaster2OrderDtoConverter;
 import com.ranchel.foodshop.dao.OrderDetailDao;
 import com.ranchel.foodshop.dao.OrderMasterDao;
 import com.ranchel.foodshop.dateobject.FoodInfo;
@@ -17,8 +18,10 @@ import com.ranchel.foodshop.utils.KeyUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -79,12 +82,30 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDto findOne(String oid) {
-        return null;
+
+     OrderMaster orderMaster=orderMasterDao.findOne(oid);
+     if(orderMaster==null){
+         throw new ShopException(ResultEnum.ORDER_NOT_EXIST);
+
+     }
+     List<OrderDetail>orderDetailList=orderDetailDao.findByOid(oid);
+     if(CollectionUtils.isEmpty(orderDetailList)){
+         throw  new ShopException(ResultEnum.ORDERDETAIL_NOT_EXIST);
+     }
+OrderDto orderDto=new OrderDto();
+     BeanUtils.copyProperties(orderMaster,orderDto);
+     orderDto.setOrderDetailsList(orderDetailList);
+        return orderDto;
     }
 
     @Override
     public Page<OrderDto> findList(String bnickname, Pageable pageable) {
-        return null;
+       Page<OrderMaster > orderMasterPage=orderMasterDao.findByBnickname(bnickname,pageable);
+        List<OrderDto>orderDtoList=OrderMaster2OrderDtoConverter.convert(orderMasterPage.getContent());
+       Page<OrderDto> orderDtoPage=new PageImpl<OrderDto>(orderDtoList,pageable,orderMasterPage.getTotalElements());
+
+
+        return orderDtoPage;
     }
 
     @Override
