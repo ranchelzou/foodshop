@@ -2,6 +2,8 @@ package com.ranchel.foodshop.service.impl;
 
 import com.ranchel.foodshop.dateobject.OrderDetail;
 import com.ranchel.foodshop.dto.OrderDto;
+import com.ranchel.foodshop.enums.OrderPayStatusEnum;
+import com.ranchel.foodshop.enums.OrderStatusEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
@@ -26,7 +28,7 @@ public class OrderServiceImplTest {
     private  final String oid="1525010991526574867";
 
     @Test
-    public void create() {
+    public void create() throws Exception{
         OrderDto orderDto=new OrderDto();
         orderDto.setBname("一页纸");
         orderDto.setBaddress("我的家");
@@ -44,23 +46,35 @@ public class OrderServiceImplTest {
     }
 
     @Test
-    public void findOne() {
+    public void findOne() throws Exception{
         OrderDto orderDto=orderService.findOne(oid);
         log.info("[查询单个订单] orderDto={}" ,orderDto);
         Assert.assertEquals(oid,orderDto.getOid());
-
-
-
     }
 
     @Test
-    public void findList() {
+    public void findList() throws Exception{
         PageRequest request=new PageRequest(0,2);
         Page<OrderDto> orderDtoPage=orderService.findList(BUYER_NICKNAME,request);
     Assert.assertNotEquals(0,orderDtoPage.getTotalElements());
     }
 
     @Test
-    public void cancel() {
+    public void cancel() throws Exception{
+        OrderDto orderDto=orderService.findOne(oid);
+       OrderDto result= orderService.cancel(orderDto);
+       Assert.assertEquals(OrderStatusEnum.CANCEL.getCode(),result.getOstatus());
+    }
+    @Test
+    public void finish()throws Exception{
+        OrderDto orderDto=orderService.findOne(oid);
+        OrderDto result= orderService.finish(orderDto);
+        Assert.assertEquals(OrderStatusEnum.FINISHEND.getCode(),result.getOstatus());
+    }
+    @Test
+    public void paid() throws Exception {
+        OrderDto orderDto=orderService.findOne(oid);
+        OrderDto result= orderService.paid(orderDto);
+        Assert.assertEquals(OrderPayStatusEnum.SUCCESS.getCode(),result.getPstatus());
     }
 }

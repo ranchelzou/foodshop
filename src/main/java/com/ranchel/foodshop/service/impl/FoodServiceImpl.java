@@ -20,7 +20,7 @@ public class FoodServiceImpl implements FoodService {
     private FoodInfoDao fiDao;
 
     @Override
-    public  FoodInfo findOne(String fid) {
+    public FoodInfo findOne(String fid) {
         return fiDao.findOne(fid);
     }
 
@@ -29,8 +29,10 @@ public class FoodServiceImpl implements FoodService {
         return fiDao.findAll(pageable);
     }
 
-   @Override
-    public List<FoodInfo> findWhole() { return fiDao.findAll(); }
+    @Override
+    public List<FoodInfo> findWhole() {
+        return fiDao.findAll();
+    }
 
     @Override
     public List<FoodInfo> findByCtypeIn(Integer ctype) {
@@ -43,10 +45,21 @@ public class FoodServiceImpl implements FoodService {
     }
 
 //    @Override
+// @Transactional
 //    public void increateStock(List<CartDto> cartDtoList) {
+//    for(
+//    CartDto cartDto:cartDtoList)
 //
+//    {
+//        FoodInfo foodInfo = fiDao.findOne(cartDto.getFid());
+//        if (foodInfo == null) {
+//            throw new ShopException(ResultEnum.fOOD_NOT_EXIST);
+//        }
+//        Integer result = foodInfo.getFStock() + cartDto.getFquantity();
+//        foodInfo.setFStock(result);
+//        fiDao.save(foodInfo);
 //    }
-
+//}
 //    @Override
 //    @Transactional
 //    //此备注是指要么全部成功，要么全部失败
@@ -55,7 +68,8 @@ public class FoodServiceImpl implements FoodService {
 //            FoodInfo foodInfo=fiDao.findOne(cartDto.getFid());
 //            if(foodInfo==null){
 //                throw new ShopException(ResultEnum.fOOD_NOT_EXIST);
-//                Integer result=foodInfo.getFStock-cartDto.getFquantity();
+//                }
+//              Integer result=foodInfo.getFStock()-cartDto.getFquantity();
 //                if(result<0){
 //                    throw new ShopException(ResultEnum.FOOD_STOCK_ERROR);
 //                }
