@@ -9,8 +9,10 @@ public interface OrderService {
     OrderDto create(OrderDto orderDto);
     /**查询单个订单*/
     OrderDto findOne(String oid);
-    /**查询订单列表*/
+    /**买家查询订单列表*/
     Page<OrderDto> findList(String bnickname, Pageable pageable);
+    /**卖家查询订单列表*/
+    Page<OrderDto> findList( Pageable pageable);
     /**取消订单*/
     OrderDto cancel(OrderDto orderDto);
     /**完结订单*/

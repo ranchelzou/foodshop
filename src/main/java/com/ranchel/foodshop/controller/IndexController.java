@@ -9,7 +9,7 @@ import java.util.Map;
 /**/
 @Controller
 public class IndexController {
-    @RequestMapping("index")
+    @RequestMapping("index123")
     public String getListaUtentiView(ModelMap map){
         map.put("name", "Spring Boot");
         return "index";

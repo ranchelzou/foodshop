@@ -68,8 +68,8 @@ public class OrderServiceImpl implements OrderService {
 
         //3写入订单数据库(ordermaster and orderdetail)
         OrderMaster orderMaster=new OrderMaster();
-       BeanUtils.copyProperties(orderDto,orderMaster);
-        orderMaster.setOid(oid);
+        orderDto.setOid(oid);
+        BeanUtils.copyProperties(orderDto,orderMaster);
         orderMaster.setOamount(orderAmont);
         orderMaster.setOstatus(OrderStatusEnum.NEW.getCode());
         orderMaster.setPstatus(OrderPayStatusEnum.WAIT.getCode());
@@ -109,7 +109,16 @@ OrderDto orderDto=new OrderDto();
 
         return orderDtoPage;
     }
+    //卖家端查询订单列表
+    @Override
+    public Page<OrderDto> findList( Pageable pageable){
+       Page<OrderMaster> orderMasterPage=orderMasterDao.findAll(pageable);
+        List<OrderDto>orderDtoList=OrderMaster2OrderDtoConverter.convert(orderMasterPage.getContent());
 
+        return new PageImpl<>(orderDtoList,pageable,orderMasterPage.getTotalElements());
+
+
+    }
     @Override
     @Transactional
     public OrderDto cancel(OrderDto orderDto) {

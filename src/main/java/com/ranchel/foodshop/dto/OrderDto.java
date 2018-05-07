@@ -1,14 +1,19 @@
 package com.ranchel.foodshop.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.ranchel.foodshop.dateobject.OrderDetail;
 import lombok.Data;
 
 import javax.persistence.Transient;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Data
+//@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+//@JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderDto {
     private String oid;
     /**买家名字*/
@@ -30,5 +35,6 @@ public class OrderDto {
     /**更新时间*/
     private Date oupdatetime;
     @Transient
-  List<OrderDetail> orderDetailsList;
+    List<OrderDetail> orderDetailsList;
+//  List<OrderDetail> orderDetailsList=new ArrayList<>();
 }

@@ -12,10 +12,12 @@
 	</head>
 
 	<body>
-		<div class="container-fluid">
+		< class="container-fluid">
 
 			<!-- 引入header.jsp -->
 			<jsp:include page="header.jsp"></jsp:include>
+			<br>name:${requestScope.name }</br>
+
 
 			<!-- 轮播图 -->
 			<div class="container-fluid">
