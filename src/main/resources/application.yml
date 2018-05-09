@@ -9,11 +9,14 @@ spring:
   jackson:
     default-property-inclusion: non_null
 
+#  mvc:
+#   view:
+#     prefix: /WEB-INF/
+#     suffix: .jsp
   mvc:
    view:
-     prefix: /WEB-INF/
-     suffix: .jsp
-
+     prefix: /templates/
+     suffix: .ftl
 server:
   context-path: /foodshop
 

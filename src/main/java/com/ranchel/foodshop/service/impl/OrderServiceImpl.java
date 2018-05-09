@@ -105,6 +105,7 @@ OrderDto orderDto=new OrderDto();
     public Page<OrderDto> findList(String bnickname, Pageable pageable) {
        Page<OrderMaster > orderMasterPage=orderMasterDao.findByBnickname(bnickname,pageable);
         List<OrderDto>orderDtoList=OrderMaster2OrderDtoConverter.convert(orderMasterPage.getContent());
+      //page对象
        Page<OrderDto> orderDtoPage=new PageImpl<OrderDto>(orderDtoList,pageable,orderMasterPage.getTotalElements());
 
         return orderDtoPage;

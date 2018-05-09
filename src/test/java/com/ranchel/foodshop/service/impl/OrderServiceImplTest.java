@@ -63,7 +63,9 @@ public class OrderServiceImplTest {
     public void list(){
         PageRequest request=new PageRequest(0,2);
         Page<OrderDto> orderDtoPage=orderService.findList(request);Assert.assertNotEquals(0,orderDtoPage.getTotalElements());
-     // Assert.assertNotEquals(0,orderDtoPage.getTotalElements());
+         //若出错，这个方法可以告诉你实际是多少，想要的值是多少
+        //Assert.assertNotEquals(0,orderDtoPage.getTotalElements());
+        //若出错，这个方法可以写一个提示信息
         Assert.assertTrue("查询所有的订单列表",orderDtoPage.getTotalElements()>0);
     }
 
