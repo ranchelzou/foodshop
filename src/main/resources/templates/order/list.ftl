@@ -11,94 +11,62 @@
                 <table class="table table-bordered table-hover table-condensed">
                     <thead>
                     <tr>
-                        <th>
-                            编号
-                        </th>
-                        <th>
-                            产品
-                        </th>
-                        <th>
-                            交付时间
-                        </th>
-                        <th>
-                            状态
-                        </th>
+                        <th>订单id</th>
+                        <th>姓名</th>
+                        <th>手机号</th>
+                        <th>地址</th>
+                        <th>金额</th>
+                        <th>用户昵称</th>
+                        <th>订单状态</th>
+                        <th>支付状态</th>
+                        <th>创建时间</th>
+                        <th colspan="2">操作</th>
+
                     </tr>
                     </thead>
                     <tbody>
-                    
+             <#list orderDtoPage.content as orderDto>
                     <tr>
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            TB - Monthly
-                        </td>
-                        <td>
-                            01/04/2012
-                        </td>
-                        <td>
-                            Default
-                        </td>
+                        <td>${orderDto.oid}</td>
+                        <td>${orderDto.bname}</td>
+                        <td>${orderDto.bphone}</td>
+                        <td>${orderDto.baddress}</td>
+                        <td>${orderDto.bnickname}</td>
+                        <td>${orderDto.oamount}</td>
+                        <td>${orderDto.getOrderStatusEnum().message}</td>
+                        <td>${orderDto.getOrderPayStatus().message}</td>
+                        <td>${orderDto.ocreatetime}</td>
+                        <td>详情</td>
+                        <td>取消</td>
                     </tr>
-                    <tr class="success">
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            TB - Monthly
-                        </td>
-                        <td>
-                            01/04/2012
-                        </td>
-                        <td>
-                            Approved
-                        </td>
-                    </tr>
-                    <tr class="error">
-                        <td>
-                            2
-                        </td>
-                        <td>
-                            TB - Monthly
-                        </td>
-                        <td>
-                            02/04/2012
-                        </td>
-                        <td>
-                            Declined
-                        </td>
-                    </tr>
-                    <tr class="warning">
-                        <td>
-                            3
-                        </td>
-                        <td>
-                            TB - Monthly
-                        </td>
-                        <td>
-                            03/04/2012
-                        </td>
-                        <td>
-                            Pending
-                        </td>
-                    </tr>
-                    <tr class="info">
-                        <td>
-                            4
-                        </td>
-                        <td>
-                            TB - Monthly
-                        </td>
-                        <td>
-                            04/04/2012
-                        </td>
-                        <td>
-                            Call in to confirm
-                        </td>
-                    </tr>
+             </#list>
                     </tbody>
                 </table>
+
+            </div>
+            <#--分页-->
+            <div class="col-md-12 column">
+                <ul class="pagination pull-right">
+                   <#if currentPage lte 1>
+                        <li class="disabled"><a href="#">上一页</a></li>
+                   <#else>
+                        <li><a href="/foodshop/seller/order/list?page=${currentPage - 1}&size=${size}">上一页</a></li>
+                   </#if>
+
+                    <#list 1..orderDtoPage.getTotalPages() as index>
+                        <#if currentPage == index>
+                            <li class="disabled"><a href="#">${index}</a></li>
+                        <#else>
+                            <li><a href="/foodshop/seller/order/list?page=${index}&size=${size}">${index}</a></li>
+                        </#if>
+                    </#list>
+
+                    <#if currentPage gte orderDtoPage.getTotalPages()>
+                        <li class="disabled"><a href="#">下一页</a></li>
+                    <#else>
+                        <li><a href="/foodshop/seller/order/list?page=${currentPage + 1}&size=${size}">下一页</a></li>
+                    </#if>
+                </ul>
             </div>
         </div>
     </div>

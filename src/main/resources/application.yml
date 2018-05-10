@@ -8,15 +8,30 @@ spring:
     show-sql: true
   jackson:
     default-property-inclusion: non_null
+  http:
+    encoding:
+      force: true
+      charset: UTF-8
+  freemarker:
+    allow-request-override: false
+    cache: false
+    check-template-location: true
+    charset: UTF-8
+    content-type: text/html; charset=utf-8
+    expose-request-attributes: false
+    expose-session-attributes: false
+    expose-spring-macro-helpers: false
+    suffix: .ftl
+    template-loader-path: classpath:/templates
 
 #  mvc:
 #   view:
 #     prefix: /WEB-INF/
 #     suffix: .jsp
-  mvc:
-   view:
-     prefix: /templates/
-     suffix: .ftl
+#  mvc:
+#   view:
+#     prefix: /templates/
+#     suffix: .ftl
 server:
   context-path: /foodshop
 

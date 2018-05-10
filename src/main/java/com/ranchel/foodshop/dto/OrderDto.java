@@ -1,8 +1,12 @@
 package com.ranchel.foodshop.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.ranchel.foodshop.dateobject.OrderDetail;
+import com.ranchel.foodshop.enums.OrderPayStatusEnum;
+import com.ranchel.foodshop.enums.OrderStatusEnum;
+import com.ranchel.foodshop.utils.EnumUtils;
 import lombok.Data;
 
 import javax.persistence.Transient;
@@ -36,5 +40,16 @@ public class OrderDto {
     private Date oupdatetime;
     @Transient
     List<OrderDetail> orderDetailsList;
+
+    @JsonIgnore
+    public OrderStatusEnum getOrderStatusEnum(){
+
+        return EnumUtils.getByCode(ostatus,OrderStatusEnum.class);
+    }
+    @JsonIgnore
+    public OrderPayStatusEnum getOrderPayStatus(){
+
+        return EnumUtils.getByCode(pstatus,OrderPayStatusEnum.class);
+    }
 //  List<OrderDetail> orderDetailsList=new ArrayList<>();
 }
