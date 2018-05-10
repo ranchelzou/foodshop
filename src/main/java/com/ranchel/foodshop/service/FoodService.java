@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface FoodService {
     FoodInfo  findOne(String fid);
+    //查询所有在架商品
     Page<FoodInfo> findAll(Pageable pageable);
     List<FoodInfo> findWhole();
     List<FoodInfo> findByCtypeIn(Integer ctype);

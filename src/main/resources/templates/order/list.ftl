@@ -1,52 +1,58 @@
 <html>
-<head>
-<meta charset="utf-8">
-<title>卖家商品列表</title>
-    <link href="https://cdn.bootcss.com/bootstrap/3.0.1/css/bootstrap.min.css" rel="stylesheet">
+<#include "../common/header.ftl">
 </head>
     <body>
-    <div class="container">
-        <div class="row clearfix">
-            <div class="col-md-12 column">
-                <table class="table table-bordered table-hover table-condensed">
-                    <thead>
-                    <tr>
-                        <th>订单id</th>
-                        <th>姓名</th>
-                        <th>手机号</th>
-                        <th>地址</th>
-                        <th>金额</th>
-                        <th>用户昵称</th>
-                        <th>订单状态</th>
-                        <th>支付状态</th>
-                        <th>创建时间</th>
-                        <th colspan="2">操作</th>
+    <div id="wrapper" class="toggled">
+       <#-- 边栏-->
+           <#include "../common/nav.ftl"></include>
+        <#--主要内容-->
+        <div id="page-content-wrapper">
+           <div class="container-fluid">
+               <div class="row clearfix">
+                   <div class="col-md-12 column">
+                       <table class="table table-bordered table-hover table-condensed">
+                           <thead>
+                           <tr>
+                               <th>订单id</th>
+                               <th>姓名</th>
+                               <th>手机号</th>
+                               <th>地址</th>
+                               <th>金额</th>
+                               <th>用户昵称</th>
+                               <th>订单状态</th>
+                               <th>支付状态</th>
+                               <th>创建时间</th>
+                               <th colspan="2">操作</th>
 
-                    </tr>
-                    </thead>
-                    <tbody>
+                           </tr>
+                           </thead>
+                           <tbody>
              <#list orderDtoPage.content as orderDto>
-                    <tr>
-                        <td>${orderDto.oid}</td>
-                        <td>${orderDto.bname}</td>
-                        <td>${orderDto.bphone}</td>
-                        <td>${orderDto.baddress}</td>
-                        <td>${orderDto.bnickname}</td>
-                        <td>${orderDto.oamount}</td>
-                        <td>${orderDto.getOrderStatusEnum().message}</td>
-                        <td>${orderDto.getOrderPayStatus().message}</td>
-                        <td>${orderDto.ocreatetime}</td>
-                        <td>详情</td>
-                        <td>取消</td>
-                    </tr>
+             <tr>
+                 <td>${orderDto.oid}</td>
+                 <td>${orderDto.bname}</td>
+                 <td>${orderDto.bphone}</td>
+                 <td>${orderDto.baddress}</td>
+                 <td>${orderDto.bnickname}</td>
+                 <td>${orderDto.oamount}</td>
+                 <td>${orderDto.getOrderStatusEnum().message}</td>
+                 <td>${orderDto.getOrderPayStatus().message}</td>
+                 <td>${orderDto.ocreatetime}</td>
+                 <td> <a href="/foodshop/seller/order/detail?oid=${orderDto.oid}"> 详情</a></td>
+                 <td>
+                            <#if orderDto.getOrderStatusEnum().message=="新订单">
+                                <a href="/foodshop/seller/order/cancel?oid=${orderDto.oid}"> 取消</a>
+                            </#if>
+                 </td>
+             </tr>
              </#list>
-                    </tbody>
-                </table>
+                           </tbody>
+                       </table>
 
-            </div>
-            <#--分页-->
-            <div class="col-md-12 column">
-                <ul class="pagination pull-right">
+                   </div>
+               <#--分页-->
+                   <div class="col-md-12 column">
+                       <ul class="pagination pull-right">
                    <#if currentPage lte 1>
                         <li class="disabled"><a href="#">上一页</a></li>
                    <#else>
@@ -66,10 +72,12 @@
                     <#else>
                         <li><a href="/foodshop/seller/order/list?page=${currentPage + 1}&size=${size}">下一页</a></li>
                     </#if>
-                </ul>
-            </div>
+                       </ul>
+                   </div>
+               </div>
+           </div>
         </div>
     </div>
-</body>
 
+</body>
 </html>

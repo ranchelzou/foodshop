@@ -32,7 +32,7 @@ public class SellOrderController {
      * size每一页有多少*/
     @GetMapping("/list")
     public ModelAndView list(@RequestParam(value = "page",defaultValue = "1") Integer page,
-                             @RequestParam(value = "size",defaultValue ="5") Integer size,
+                             @RequestParam(value = "size",defaultValue ="10") Integer size,
                              Map<String,Object> map){
         PageRequest request=new PageRequest(page-1,size);
         Page<OrderDto> orderDtoPage=orderService.findList(request);
@@ -48,15 +48,51 @@ public class SellOrderController {
                                Map<String,Object> map){
         try {
             OrderDto orderDto=orderService.findOne(oid);
+             orderService.cancel(orderDto);
         }catch (ShopException e){
-            log.error("[卖家端取消订单] 查询不到订单");
+            log.error("[卖家端取消订单] 发生异常{}",e);
             map.put("msg",e.getMessage());
             map.put("url","/foodshop/seller/order/list");
             return new ModelAndView("common/error",map);
 
         }
        // if (orderDto==null){ }
-       // orderService.cancel(orderDto);
-        return new ModelAndView("order/cancel");
+        map.put("msg",ResultEnum.ORDER_CANCEL_SUCCESS.getMessage());
+        map.put("url","/foodshop/seller/order/list");
+        return new ModelAndView("common/success");
+    }
+
+    //订单详情，参数oid,map
+    @GetMapping("/detail")
+    public ModelAndView detail(@RequestParam("oid") String oid,
+                               Map<String,Object> map) {
+        OrderDto orderDto=new OrderDto();
+        try {
+            orderDto=orderService.findOne(oid);
+        }catch (ShopException e){
+            log.error("[卖家端查询订单] 发生异常{}",e);
+            map.put("msg",e.getMessage());
+            map.put("url","/foodshop/seller/order/list");
+            return new ModelAndView("common/error",map);
+        }
+        map.put("orderDto",orderDto);
+        return new ModelAndView("order/detail",map);
+    }
+
+    @GetMapping("/finish")
+    public ModelAndView finish(@RequestParam("oid") String oid,
+                               Map<String,Object> map) {
+        try {
+            OrderDto orderDto=orderService.findOne(oid);
+            orderService.finish(orderDto);
+        }catch (ShopException e){
+            log.error("[卖家端完结订单] 发生异常{}",e);
+            map.put("msg",e.getMessage());
+            map.put("url","/foodshop/seller/order/list");
+            return new ModelAndView("common/error",map);
+        }
+        map.put("msg",ResultEnum.ORDER_FINISH_SUCCESS.getMessage());
+        map.put("url","/foodshop/seller/order/list");
+        return new ModelAndView("common/success");
     }
 }
