@@ -1,6 +1,7 @@
 package com.ranchel.foodshop.service.impl;
 
 import com.ranchel.foodshop.dateobject.FoodInfo;
+import com.ranchel.foodshop.enums.FoodStatusEnum;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,6 +23,11 @@ public class FoodServiceImplTest {
     public void findOne() throws Exception{
         FoodInfo fi=foodService.findOne("5210");
         Assert.assertEquals("5210",fi.getFid());
+    }
+    @Test
+    public void findUpAll() throws Exception {
+        List<FoodInfo> foodInfoList = foodService.findUpAll();
+        Assert.assertNotEquals(0, foodInfoList.size());
     }
     @Test
     public void findAll() {
@@ -48,6 +54,16 @@ public class FoodServiceImplTest {
         fi.setCtype(6);
         FoodInfo result=foodService.save(fi);
         Assert.assertNotNull(result);
+    }
+    @Test
+    public void onSale() {
+       FoodInfo result = foodService.onSale("10");
+        Assert.assertEquals(FoodStatusEnum.UP, result.getFoodStatusEnum());
+    }
 
+    @Test
+    public void offSale() {
+        FoodInfo result = foodService.offSale("10");
+        Assert.assertEquals(FoodStatusEnum.DOWN, result.getFoodStatusEnum());
     }
 }

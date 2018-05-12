@@ -28,6 +28,9 @@ public class FoodCategory {
     private String cname;
     private Integer ctype;
 
+    private Date ccreatetime;
+    private Date cupdatetime;
+
     public FoodCategory() {
     }
 

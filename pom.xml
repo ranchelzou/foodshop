@@ -23,12 +23,12 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 	</properties>
-	<dependencies>
 
-	<dependency>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-web</artifactId>
-	</dependency>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -36,35 +36,40 @@
 			<scope>test</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+        <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
 
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.projectlombok</groupId>
+			<groupId>org.project.lombok</groupId>
 			<artifactId>lombok</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>com.ranchel</groupId>
 			<artifactId>foodshop</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>org.projectlombok</groupId>-->
+			<!--<artifactId>lombok</artifactId>-->
+			<!--<version>1.16.16</version>-->
+		<!--</dependency>-->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+		</dependency>
 
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-freemarker</artifactId>
-		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
@@ -75,16 +80,22 @@
 			<scope>provided</scope>
 		</dependency>
 
-
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>cn.springboot</groupId>
+			<artifactId>best-pay-sdk</artifactId>
+			<version>1.1.0</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-websocket</artifactId>
+			<artifactId>spring-boot-starter-freemarker</artifactId>
 		</dependency>
 
 	</dependencies>
-
-
-
 
 	<build>
 		<plugins>

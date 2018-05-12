@@ -5,8 +5,9 @@ import lombok.Getter;
 @Getter
 public enum ResultEnum {
     SUCCESS(0,"成功"),
-    fOOD_NOT_EXIST(1,"商品不存在"),
-    FOOD_STOCK_ERROR(2,"商品库存不足"),
+    fOOD_NOT_EXIST(1,"食品不存在"),
+    FOOD_STATUS_ERROR(11,"食品状态不正确"),
+    FOOD_STOCK_ERROR(2,"食品库存不足"),
     ORDER_NOT_EXIST(3,"订单不存在"),
     ORDERDETAIL_NOT_EXIST(4,"订单详情不存在"),
     ORDER_STATUS_ERROR(5,"订单状态不正确"),

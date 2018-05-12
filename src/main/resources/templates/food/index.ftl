@@ -12,42 +12,38 @@
         <div class="container-fluid">
             <div class="row clearfix">
                 <div class="col-md-12 column">
-                    <form role="form" method="post" action="/sell/seller/product/save">
+                    <form role="form" method="post" action="/foodshop/seller/food/save">
                         <div class="form-group">
                             <label>名称</label>
-                            <input name="productName" type="text" class="form-control" value="${(productInfo.productName)!''}"/>
+                            <input name="fname" type="text" class="form-control" value="${(foodInfo.fname)!''}"/>
                         </div>
                         <div class="form-group">
                             <label>价格</label>
-                            <input name="productPrice" type="text" class="form-control" value="${(productInfo.productPrice)!''}"/>
-                        </div>
-                        <div class="form-group">
-                            <label>库存</label>
-                            <input name="productStock" type="number" class="form-control" value="${(productInfo.productStock)!''}"/>
+                            <input name="fprice" type="text" class="form-control" value="${(foodInfo.fprice)!''}"/>
                         </div>
                         <div class="form-group">
                             <label>描述</label>
-                            <input name="productDescription" type="text" class="form-control" value="${(productInfo.productDescription)!''}"/>
+                            <input name="fdescription" type="text" class="form-control" value="${(foodInfo.fdescription)!''}"/>
                         </div>
                         <div class="form-group">
                             <label>图片</label>
-                            <img height="100" width="100" src="${(productInfo.productIcon)!''}" alt="">
-                            <input name="productIcon" type="text" class="form-control" value="${(productInfo.productIcon)!''}"/>
+                            <img height="100" width="100" src="${(foodInfo.fimage)!''}" alt="">
+                            <input name="productIcon" type="text" class="form-control" value="${(foodInfo.fimage)!''}"/>
                         </div>
                         <div class="form-group">
                             <label>类目</label>
-                            <select name="categoryType" class="form-control">
+                            <select name="ctype" class="form-control">
                                 <#list categoryList as category>
-                                    <option value="${category.categoryType}"
-                                            <#if (productInfo.categoryType)?? && productInfo.categoryType == category.categoryType>
+                                    <option value="${category.ctype}"
+                                            <#if (foodInfo.ctype)?? && foodInfo.ctype == category.ctype>
                                                 selected
                                             </#if>
-                                        >${category.categoryName}
+                                        >${category.cname}
                                     </option>
                                 </#list>
                             </select>
                         </div>
-                        <input hidden type="text" name="productId" value="${(productInfo.productId)!''}">
+                        <input hidden type="text" name="fid" value="${(foodInfo.fid)!''}">
                         <button type="submit" class="btn btn-default">提交</button>
                     </form>
                 </div>
