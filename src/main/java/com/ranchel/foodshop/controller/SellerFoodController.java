@@ -6,6 +6,7 @@ import com.ranchel.foodshop.exception.ShopException;
 import com.ranchel.foodshop.form.FoodForm;
 import com.ranchel.foodshop.service.CategoryService;
 import com.ranchel.foodshop.service.FoodService;
+import com.ranchel.foodshop.utils.KeyUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -94,8 +95,13 @@ public class SellerFoodController {
         map.put("categoryList",categoryList);
         return new ModelAndView("food/index",map);
    }
-/**保存和更新的方法
- * */
+/**
+     * 保存/更新
+     * @param foodForm
+     * @param bindingResult
+     * @param map
+     * @return
+     */
    @PostMapping("/save")
     public ModelAndView save(@Valid FoodForm foodForm,
                              BindingResult bindingResult,
@@ -110,6 +116,9 @@ public class SellerFoodController {
            //如果fid为空，说明是新增的
            if(!StringUtils.isEmpty(foodForm.getFid())){
                foodInfo=foodService.findOne(foodForm.getFid());
+           }
+           else{
+               foodForm.setFid(KeyUtil. uKey());
            }
            BeanUtils.copyProperties(foodForm,foodInfo);
            foodService.save(foodInfo);
