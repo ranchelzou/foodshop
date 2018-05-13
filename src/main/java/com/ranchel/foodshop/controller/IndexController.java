@@ -16,6 +16,6 @@ public class IndexController {
     public ModelAndView SellerLogin() {
         return new ModelAndView("buyer/index");
     }
-
+    //CESHI 
 }
 
