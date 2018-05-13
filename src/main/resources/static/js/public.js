@@ -412,11 +412,32 @@ define(function(){
 			 $("#Phone_Mobile").on("blur",function(){
 			 	var phone = $("#Phone_Mobile").val();
 			 	 if( /^1[3|4|5|7|8][0-9]{9}$/ig.test(phone)){
-			 		$("#Phone_Mobile").next().html("手机号正确").attr("class","pass-succ");
-			 		$("#Phone_Mobile").attr("isYes","true");		
+
+			 	 	var status = false;
+			 	 	//请求后台数据库 查询用户是否已经注册
+                     $.ajax({
+                             url:"http://127.0.0.1:8080/foodshop/api/checkusername",
+                             type: 'POST',
+                             async: false,
+                             data: {"username":phone},
+							 timeout: 3000,
+							 dataType: 'json',
+							 success: function(data){
+								 console.log(data['code']);
+								 if(data['code']=='101'){
+								 	status = true;
+								 }
+							 },
+						 })
+					if(status){
+                        $("#Phone_Mobile").next().html("手机号正确").attr("class","pass-succ");
+                        $("#Phone_Mobile").attr("isYes","true");
+					}else {
+                        $("#Phone_Mobile").next().html("该用户已注册").attr("class","pass-error");
+					}
+
 			 	}else{
 			 		$("#Phone_Mobile").next().html("请输入正确的手机号").attr("class","pass-error");
-			 		
 			 	}
 			 })
 
@@ -435,12 +456,13 @@ define(function(){
 			 	var pass = $("#Phone_Password").val();
 			 	if( pass.length < 5 || pass.length > 16){
 			 		$("#Phone_Password").next().html("密码长度应为5-16位").attr("class","pass-error");
-			 	}else if(/^[a-zA-Z|[_]]{1}([a-zA-Z0-9]|[_]){4,15}$/ig.test(pass)){
-			 		$("#Phone_Password").attr("isYes","true");
-			 		$("#Phone_Password").next().html("密码正确").attr("class","pass-succ");
-			 	}else{
-			 		$("#Phone_Password").next().html("密码应由字母或_开头").attr("class","pass-error");
-			 	}
+			 	}else  {
+                    $("#Phone_Password").attr("isYes", "true");
+                    $("#Phone_Password").next().html("密码正确").attr("class", "pass-succ");
+                }
+			 	// }else{
+			 	// 	$("#Phone_Password").next().html("密码应由字母或_开头").attr("class","pass-error");
+			 	// }
 			 })
 
 
@@ -463,11 +485,8 @@ define(function(){
 					$("#code-tip").html("请输入正确的验证码").attr("class","pass-error");
 				}else if($("#Phone_Mobile").attr("isYes") == "false"){
 					
-					$("#Phone_Mobile").next().html("请输入正确手机号").attr("class","pass-error");
-				
-				}else if($("#Phone_VerifyCode").attr("isYes") == "false"){
-					$("#Phone_VerifyCode").next().next().html("验证码不能为空").attr("class","pass-error");
-				
+					$("#Phone_Mobile").next().html("请输入正确用户名").attr("class","pass-error");
+
 				}else if($("#Phone_Password").attr("isYes") == "false"){
 					$("#Phone_ConfimPassword").next().html("请设置密码").attr("class","pass-error");
 				
@@ -475,7 +494,10 @@ define(function(){
 					$("#Phone_ConfimPassword").next().html("密码确认不正确").attr("class","pass-error");
 				
 				}else{
+
+
 					alert("注册成功");
+
 					$(".register").css("display","none");
 					$(".pass-error").add($(".pass-succ")).html("");
 					$(".register").find("input").val('');
@@ -524,14 +546,8 @@ define(function(){
 						        +'<span id="code-tip"></span>'
 						    +'</p>'
 						    +'<p>'
-						        +'<span class="field-name">手机号</span>'
-						        +'<input class="input input-phone" id="Phone_Mobile" name="Phone_Mobile" placeholder="请输入您的手机号" value="" type="text">'
-						        +'<span></span>'
-						    +'</p>'
-						    +'<p>'
-						        +'<span class="field-name">手机验证码</span>'
-						        +'<input class="input input-yzm" id="Phone_VerifyCode" name="Phone_VerifyCode" placeholder="手机验证码" value="" type="text">'
-						        +'<a href="#" class="btn-yzm" id="Phone_SendCode">获取验证码</a>'
+						        +'<span class="field-name">用户名</span>'
+						        +'<input class="input input-phone" id="Phone_Mobile" name="Phone_Mobile" placeholder="请输入您的用户名" value="" type="text">'
 						        +'<span></span>'
 						    +'</p>'
 						    +'<p>'
@@ -544,15 +560,8 @@ define(function(){
 						        +'<input class="input input-key" id="Phone_ConfimPassword" name="Phone_ConfimPassword" placeholder="再次输入密码" type="password">'
 						        +'<span "></span>'
 						   + '</p>'
-						    +'<p>'
-						        +'<span class="field-name">邀请码</span>'
-						        +'<input class="input input-key" id="Phone_AtCode" name="Phone_AtCode" placeholder="邀请码" value="" type="text">'
-						       + '<span></span>'
-						   + '</p>'
-						    +'<p>'
-						       + '<span class="field-name"></span><label><input id="tab1chk" checked="checked" type="checkbox">我已阅读并同意<a href="#" class="green btn-protocol">《易果服务协议》</a><span></span></label>'
-						        +'<input id="DeviceId" name="DeviceId" value="" type="hidden">'
-						    +'</p>'
+
+
 						    +'<span></span>'
 						    +'<p><span class="field-name"></span><a href="#" class="btn-green-l" id="PhoneReg" >立即注册</a></p>'
 						+'</form>'
