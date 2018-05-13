@@ -8,7 +8,9 @@
         <li>
             <a href="/foodshop/seller/order/list"><i class="fa fa-fw fa-list-alt"></i> 订单</a>
         </li>
-        <li class="dropdown open">
+
+
+        <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i class="fa fa-fw fa-plus"></i> 商品 <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
                 <li class="dropdown-header">操作</li>
@@ -26,7 +28,7 @@
         </li>
 
         <li>
-            <a href="/foodshop/seller/logout"><i class="fa fa-fw fa-list-alt"></i> 登出</a>
+            <a href="/foodshop/seller/owner/login"><i class="fa fa-fw fa-list-alt"></i> 登出</a>
         </li>
     </ul>
 </nav>
