@@ -1,6 +1,6 @@
-package com.ranchel.foodshop.api;
+package com.ranchel.foodshop.api.alipayconfig;
 
-public class AliPayApi {
+public class AlipayConfig {
     // 商户appid
     public static String APPID = "2018051460147544";
     // 私钥 pkcs8格式的

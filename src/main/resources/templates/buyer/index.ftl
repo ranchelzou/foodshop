@@ -37,10 +37,13 @@
 			</div>
 			<div class = "nav-right">
 				<ul >
-					<li><a href="#" class="login">[登录]</a></li>
-					<li><a href="#"  class="signin">[注册]</a></li>
-                    <li><a href="#">我的订单</a></li>
-
+                     <#if username?exists>
+                        <li><a href="${username}" id="MyOrderLink"> 我的订单</a></li>
+                         <li><a href="" id="Logout">退出</a></li>
+                     <#else >
+                     <li><a href="#" id="LoginLink" class="login">[登录]</a></li>
+					  <li><a href="#" id="RegisterLink" class="signin">[注册]</a></li>
+                    </#if>
 				</ul>
 
 			</div>

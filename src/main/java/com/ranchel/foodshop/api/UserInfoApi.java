@@ -5,6 +5,7 @@ import com.ranchel.foodshop.dateobject.ApiMessage;
 import com.ranchel.foodshop.dateobject.Buyer_Info;
 import com.ranchel.foodshop.enums.ApiCodeEnum;
 import com.ranchel.foodshop.form.SellerInfoForm;
+import org.apache.http.HttpResponse;
 import org.apache.tomcat.util.http.RequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
 @RestController
@@ -22,12 +24,14 @@ import javax.servlet.http.HttpServletResponse;
 public class UserInfoApi {
     @Autowired
     private BuyerInfoDao buyerInfoDao;
+
+
     @RequestMapping("/checkusername")
     @ResponseBody
-    public ApiMessage SellerUsernameCheckin(HttpServletRequest request, HttpServletResponse response) {
+    public ApiMessage BuyerUsernameCheckin(HttpServletRequest request, HttpServletResponse response) {
 
         //跨域设置
-        common(response);
+        Common.common(response);
 
         ApiMessage apiMessage = new ApiMessage();
         String  username = request.getParameter("username");
@@ -50,14 +54,101 @@ public class UserInfoApi {
         return apiMessage;
     }
 
-    private HttpServletResponse common( HttpServletResponse response){
-        //这里填写你允许进行跨域的主机ip
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        //允许的访问方法
-        response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE, PATCH");
-        //Access-Control-Max-Age 用于 CORS 相关配置的缓存
-        response.setHeader("Access-Control-Max-Age", "3600");
-        response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-        return response;
+    @RequestMapping("/register")
+    @ResponseBody
+    public ApiMessage BuyerRegister(HttpServletRequest request, HttpServletResponse response) {
+
+        //跨域设置
+        Common.common(response);
+        ApiMessage apiMessage = new ApiMessage();
+        try{
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
+            System.out.println(username+"/ "+password);
+
+            Buyer_Info buyer_info = new Buyer_Info();
+            buyer_info.setUsername(username);
+            buyer_info.setPassword(password);
+
+            buyerInfoDao.save(buyer_info);
+
+            apiMessage.setCode(ApiCodeEnum.USERREGISTERSUCESS.getCode());
+            apiMessage.setMessage(ApiCodeEnum.USERREGISTERSUCESS.getMessage());
+
+
+        }catch (Exception e){
+            apiMessage.setCode(ApiCodeEnum.USERREGISTERFAIL.getCode());
+            apiMessage.setMessage(ApiCodeEnum.USERREGISTERFAIL.getMessage());
+        }
+
+        return apiMessage;
     }
+
+    @RequestMapping("/login")
+    @ResponseBody
+    public ApiMessage BuyerLogin(HttpServletRequest request, HttpServletResponse response) {
+
+        //跨域设置
+        Common.common(response);
+        ApiMessage apiMessage = new ApiMessage();
+        try{
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
+            System.out.println(username+"/ "+password);
+
+            Buyer_Info buyer_info = buyerInfoDao.findByUsernameAndPassword(username,password);
+            if(buyer_info !=null){
+
+                //登录成功
+                apiMessage.setCode(ApiCodeEnum.USERLOGINSUCCESS.getCode());
+                apiMessage.setMessage(ApiCodeEnum.USERLOGINSUCCESS.getMessage());
+
+                //设置session
+                HttpSession session = request.getSession();
+                session.setAttribute("username",username);
+
+
+            }else {
+                apiMessage.setCode(ApiCodeEnum.USERLOGINFAIL.getCode());
+                apiMessage.setMessage(ApiCodeEnum.USERLOGINFAIL.getMessage());
+            }
+
+        }catch (NullPointerException e){
+            apiMessage.setCode(ApiCodeEnum.USERLOGINFAIL.getCode());
+            apiMessage.setMessage(ApiCodeEnum.USERLOGINFAIL.getMessage());
+        }catch (Exception e){
+            apiMessage.setCode(ApiCodeEnum.USERLOGINERROR.getCode());
+            apiMessage.setMessage(ApiCodeEnum.USERLOGINERROR.getMessage());
+        }
+
+        return apiMessage;
+    }
+
+
+    @RequestMapping("/logout")
+    @ResponseBody
+    public ApiMessage BuyerLogout(HttpSession session, HttpServletResponse response) {
+
+        //跨域设置
+        Common.common(response);
+        ApiMessage apiMessage = new ApiMessage();
+        try{
+
+           session.removeAttribute("username");
+            apiMessage.setCode(ApiCodeEnum.USERLOGOUTSUCCESS.getCode());
+            apiMessage.setMessage(ApiCodeEnum.USERLOGOUTSUCCESS.getMessage());
+
+        }catch (NullPointerException e){
+            apiMessage.setCode(ApiCodeEnum.USERLOGOUTFAIL.getCode());
+            apiMessage.setMessage(ApiCodeEnum.USERLOGOUTFAIL.getMessage());
+        }catch (Exception e){
+            apiMessage.setCode(ApiCodeEnum.USERLOGOUTERROR.getCode());
+            apiMessage.setMessage(ApiCodeEnum.USERLOGOUTERROR.getMessage());
+        }
+
+        return apiMessage;
+    }
+
+
+
 }
