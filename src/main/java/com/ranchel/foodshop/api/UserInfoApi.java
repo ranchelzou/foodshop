@@ -8,13 +8,12 @@ import com.ranchel.foodshop.form.SellerInfoForm;
 import org.apache.tomcat.util.http.RequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
 @RestController
@@ -24,7 +23,7 @@ public class UserInfoApi {
     private BuyerInfoDao buyerInfoDao;
     @RequestMapping("/checkusername")
     @ResponseBody
-    public ApiMessage SellerUsernameCheckin(HttpServletRequest request, HttpServletResponse response) {
+    public ApiMessage BuyerUsernameCheckin(HttpServletRequest request, HttpServletResponse response) {
 
         //跨域设置
         common(response);
@@ -49,6 +48,40 @@ public class UserInfoApi {
 
         return apiMessage;
     }
+
+    @RequestMapping("/register")
+    @ResponseBody
+    public ApiMessage BuyerRegister(HttpServletRequest request, HttpServletResponse response) {
+
+        //跨域设置
+        common(response);
+
+        ApiMessage apiMessage = new ApiMessage();
+        String  username = request.getParameter("username");
+        String password=request.getParameter("password");
+        System.out.println(username+"/"+password);
+        apiMessage.setMessage(ApiCodeEnum.USERNOTEXSIT.getMessage());
+        return apiMessage;
+    }
+    //@RequestMapping("/login")
+    @PostMapping("/login")
+    @ResponseBody
+    public ApiMessage BuyerLogin(@RequestParam(name = "username") String username,
+                                 @RequestParam(name = "password") String password,
+                                 HttpSession session  ){
+//     //跨域设置
+//     common(response);
+//        @RequestMapping("/checkusername")
+//    ApiMessage apiMessage = new ApiMessage();
+//    String  username = request.getParameter("username");
+//    String password=request.getParameter(s:"password");
+        Buyer_Info buyer_info = buyerInfoDao.findByUsernameAndPassword(username, password);
+        if(buyer_info==null){
+
+        }
+
+        return null;
+ }
 
     private HttpServletResponse common( HttpServletResponse response){
         //这里填写你允许进行跨域的主机ip

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50720
 File Encoding         : 65001
 
-Date: 2018-05-13 19:38:42
+Date: 2018-05-14 18:46:38
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -29,7 +29,7 @@ CREATE TABLE `buyer_info` (
 -- ----------------------------
 -- Records of buyer_info
 -- ----------------------------
-INSERT INTO `buyer_info` VALUES ('1', '13940517937', 'abc');
+INSERT INTO `buyer_info` VALUES ('1', '13940517937', 'abc123456');
 
 -- ----------------------------
 -- Table structure for food_category
@@ -47,10 +47,12 @@ CREATE TABLE `food_category` (
 -- ----------------------------
 -- Records of food_category
 -- ----------------------------
-INSERT INTO `food_category` VALUES ('1', '粮食', '2018-03-31 11:01:40', '2018-05-12 23:22:33', '1');
-INSERT INTO `food_category` VALUES ('2', '水果', '2018-04-07 10:52:55', '2018-05-12 23:22:51', '2');
-INSERT INTO `food_category` VALUES ('9', '面食', '2018-04-11 20:09:44', '2018-05-12 23:23:13', '3');
-INSERT INTO `food_category` VALUES ('10', '海鲜', '2018-05-12 23:21:50', '2018-05-12 23:23:25', '4');
+INSERT INTO `food_category` VALUES ('1', '粮油杂货', '2018-03-31 11:01:40', '2018-05-14 12:36:16', '1');
+INSERT INTO `food_category` VALUES ('2', '新鲜水果', '2018-04-07 10:52:55', '2018-05-14 12:35:26', '2');
+INSERT INTO `food_category` VALUES ('3', '肉类蛋品', '2018-04-11 20:09:44', '2018-05-14 12:36:34', '3');
+INSERT INTO `food_category` VALUES ('4', '海鲜水产', '2018-05-12 23:21:50', '2018-05-14 12:35:41', '4');
+INSERT INTO `food_category` VALUES ('5', '调料大全', '2018-05-14 12:37:25', '2018-05-14 12:37:25', '5');
+INSERT INTO `food_category` VALUES ('6', '新鲜蔬菜', '2018-05-14 12:37:54', '2018-05-14 12:37:54', '6');
 
 -- ----------------------------
 -- Table structure for food_info
@@ -72,11 +74,12 @@ CREATE TABLE `food_info` (
 -- ----------------------------
 -- Records of food_info
 -- ----------------------------
-INSERT INTO `food_info` VALUES ('1', '草莓', '11.50', '丹东大草莓', null, '0', '1', '2018-04-11 22:18:31', '2018-05-13 15:36:10');
-INSERT INTO `food_info` VALUES ('10', '海鲜', '5.21', '大连特产', 'http://sea.jpg', '1', '6', '2018-04-11 22:31:53', '2018-05-13 15:37:12');
-INSERT INTO `food_info` VALUES ('1526125872474927822', '西瓜', '2.90', '嘎嘎甜', null, '0', '6', '2018-05-12 19:51:12', '2018-05-12 19:51:12');
-INSERT INTO `food_info` VALUES ('2', '菠萝', '7.00', '海南菠萝', null, '0', '2', '2018-04-11 22:19:08', '2018-05-11 09:31:45');
-INSERT INTO `food_info` VALUES ('5210', '爱的味道', '5.21', '单身狗专属', 'http://xx.jpg', '0', '52', '2018-04-11 21:22:53', '2018-05-11 20:42:05');
+INSERT INTO `food_info` VALUES ('2001', '草莓', '11.50', '丹东大草莓', null, '0', '2', '2018-04-11 22:18:31', '2018-05-14 14:49:04');
+INSERT INTO `food_info` VALUES ('2002', '西瓜', '2.90', '嘎嘎甜', null, '0', '2', '2018-05-12 19:51:12', '2018-05-14 14:49:15');
+INSERT INTO `food_info` VALUES ('2003', '菠萝', '7.00', '海南菠萝', null, '0', '2', '2018-04-11 22:19:08', '2018-05-14 14:49:01');
+INSERT INTO `food_info` VALUES ('4001', '龙虾', '5.21', '大连特产', 'http://sea.jpg', '1', '4', '2018-04-11 22:31:53', '2018-05-14 14:49:06');
+INSERT INTO `food_info` VALUES ('4002', '鲅鱼', '8.40', '吧渤海', null, '0', '4', '2018-05-14 14:50:40', '2018-05-14 14:50:40');
+INSERT INTO `food_info` VALUES ('6210', '白菜', '5.21', '单身狗专属', 'http://xx.jpg', '0', '6', '2018-04-11 21:22:53', '2018-05-14 14:49:41');
 
 -- ----------------------------
 -- Table structure for order_detail

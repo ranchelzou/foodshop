@@ -30,7 +30,7 @@ public class BuyerInfoDaoTest {
     }
     @Test
     public void findByUsernameAndPassword() {
-      Buyer_Info result= buyerInfoDao.findByUsernameAndPassword("13352203529","abc") ;
+      Buyer_Info result= buyerInfoDao.findByUsernameAndPassword("13352203578","abc") ;
       Assert.assertNotNull(result);
     }
     @Test

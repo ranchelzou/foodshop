@@ -111,20 +111,24 @@
 			<div class="sort-wrap">
 				<div class="catalogs">
 					<b>全部商品分类▼</b>
-					<div class="catalogs-list">
-
+                    <#--<div class="dropdown">-->
+                        <#--<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i class="fa fa-fw fa-plus"></i> 商品▼ <span class="caret"></span></a>-->
+                        <div class="catalogs-list" >
 						 <div class="item">
 							<p><s>></s></p>
-							<a href="#"><i></i>进口水果</a>
+							<#--<a href="#"><i></i>${category.cname}</a>-->
+							 <a href="#"><i></i>dabaicai</a>
 							<div class ="catalogs-sub" >
-								<h4><a href="#">进口水果</a></h4>
+								<h4><a href="#">dabaicai</a></h4>
 								<div class="sub-list"></div>
 								<div class="sub-img">
 									<a href="#"><img src="/foodshop/images/sort/1.png" alt=""></a>
 								</div>
 							</div>
+
 						</div>
 					</div>
+
 				</div>
 			</div>
 		</div>

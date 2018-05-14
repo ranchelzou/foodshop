@@ -149,39 +149,39 @@ define(function(){
 
 
 		//商品分类菜单
-			var flag = true;
-			catalogsList();
-			$(".catalogs").click(function(){
-				
-				if(flag){
-					$(".catalogs-list").show();
-					$(".catalogs-list").delegate(".catalogs-sub","mouseout",function(){
-						$(".catalogs-sub").hide();
-					})
-				}else{
-					$(".catalogs-list").hide();
-
-				}
-				flag = !flag;
-			})
-			$(".catalogs").hover(function(){
-				if(flag){
-					$(".catalogs-list").show();
-				}
-			},function(){
-				if(flag){
-					$(".catalogs-list").hide();
-				}
-			});
-
-			$(".catalogs-list").delegate(".item","mouseover",function(){
-				$(".catalogs-sub").show();
-				$(this).children("p").show();
-				$(this).children("a").addClass("current");
-				$(this).children("p").find("s").show();
-				subList($(this).index());
-
-			})
+		// 	var flag = true;
+		// 	catalogsList();
+		// 	$(".catalogs").click(function(){
+		//
+		// 		if(flag){
+		// 			$(".catalogs-list").show();
+		// 			$(".catalogs-list").delegate(".catalogs-sub","mouseout",function(){
+		// 				$(".catalogs-sub").hide();
+		// 			})
+		// 		}else{
+		// 			$(".catalogs-list").hide();
+        //
+		// 		}
+		// 		flag = !flag;
+		// 	})
+		// 	$(".catalogs").hover(function(){
+		// 		if(flag){
+		// 			$(".catalogs-list").show();
+		// 		}
+		// 	},function(){
+		// 		if(flag){
+		// 			$(".catalogs-list").hide();
+		// 		}
+		// 	});
+        //
+		// 	$(".catalogs-list").delegate(".item","mouseover",function(){
+		// 		$(".catalogs-sub").show();
+		// 		$(this).children("p").show();
+		// 		$(this).children("a").addClass("current");
+		// 		$(this).children("p").find("s").show();
+		// 		subList($(this).index());
+        //
+		// 	})
 			$(".catalogs-list").delegate(".item","mouseout",function(){
 				$(this).children("a").removeClass("current");
 				$(this).children("p").hide();
@@ -192,7 +192,7 @@ define(function(){
 
 			function catalogsList(){
 				$.ajax({
-					url:"../data/goodslist.json",
+					url:"http://127.0.0.1:8080/foodshop/buyer/food/list",
 					method:"get",
 					success:function(data){
 						var html = "";
@@ -354,7 +354,7 @@ define(function(){
 				if(!oDiv){
 					oDiv = document.createElement('div');
 					oDiv.id = "login";
-					oDiv.innerHTML =  '<form>'+
+					oDiv.innerHTML =  '<form action="/foodshop/api/login" method="post">'+
 						'<div id="close">×</div>'
 						+'<p>'
 							+'<strong>欢迎登录</strong>'
@@ -362,10 +362,10 @@ define(function(){
 						+'</p>'
 						+'<div id="msg-error"></div>'
 						+'<p>'
-							+'<input  id="UserName" type="text" placeholder="邮箱/账号/已验证手机" name = "userID" class="input input-phone">'
+							+'<input  id="username" type="text" placeholder="邮箱/账号/已验证手机" name = "username" class="input input-phone">'
 						+'</p>'
 						+'<p>'
-							+'<input  id="Pwd" type="text" placeholder="密码" name = "password" class="input input-key">'
+							+'<input  id="password" type="text" placeholder="密码" name = "password" class="input input-key">'
 						+'</p>'
 						+'<p>'
 							+'<input class="input input-key" id="VerifyCode" name="VerifyCode" placeholder="验证码" style="width:100px" value="" type="text">'
@@ -493,10 +493,18 @@ define(function(){
 				}else if($("#Phone_ConfimPassword").attr("isYes") == "false"){
 					$("#Phone_ConfimPassword").next().html("密码确认不正确").attr("class","pass-error");
 				
-				}else{
-
-
-					alert("注册成功");
+				}else
+                    $.ajax({
+                        url: "http://127.0.0.1:8080/foodshop/api//register",
+                        type: 'POST',
+                        async: false,
+                        data: {"username": phone,"password":password},
+                        timeout: 3000,
+                        dataType: 'json',
+                        // success: function(data){
+                        //     console.log(data['code']);
+                    })
+					  alert("注册成功");
 
 					$(".register").css("display","none");
 					$(".pass-error").add($(".pass-succ")).html("");

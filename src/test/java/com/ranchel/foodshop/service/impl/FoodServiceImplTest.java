@@ -40,6 +40,7 @@ public class FoodServiceImplTest {
     @Test
     public void findByCtypeIn() {
         List<FoodInfo>fi=foodService.findByCtypeIn(2);
+        System.out.println(fi);
     }
 
 
