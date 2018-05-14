@@ -192,13 +192,15 @@ define(function(){
 
 			function catalogsList(){
 				$.ajax({
-					url:"../data/goodslist.json",
+					url:"http://localhost:8080/foodshop/api/catagorylist",
 					method:"get",
 					success:function(data){
+						var catagorylist = data['data']
 						var html = "";
-						for(var i = 0; i < data.length; i ++){
-							html += '<div class="item"><p><s>></s></p><a href="#"><i style="background-position:'+
-							-24*i +'px 0;"></i>'+ data[i].title +'</a></div>';
+						for(var i = 0; i < catagorylist.length; i ++){
+							html += '<div class="item"><p><s>></s></p>' +
+								'<a href="#"><i style="background-position:'+
+							-24*i +'px 0;"></i>'+ catagorylist[i].name +'</a></div>';
 						}
 						var subHtml = '<div class ="catalogs-sub"></div>';
 						html = subHtml + html;
@@ -211,17 +213,18 @@ define(function(){
 			function subList(n){
 				var index = n;
 				$.ajax({
-					url:"../data/goodslist.json",
+					url:"http://localhost:8080/foodshop/api/catagorylist",
 					method:"get",
 					success:function(data){
+                        var catagorylist = data['data'];
 						var sublistHtml = "";
-						sublistHtml = '<h4><a href="#">' + data[index].title
-						+'</a></h4><div class="sub-list"></div><div class="sub-img"><a href="#"><img src="'
-						 +data[index].src +'"/></a></div>'			
+						sublistHtml = '<h4><a href="#">' + catagorylist[index-1].name
+						+'</a></h4><div class="sub-list"></div>'
+
 						$(".catalogs-sub").html(sublistHtml);
 						var html = "";
-						for(var i = 0 ; i < data[index].content.length;i++){
-							html += '<a href = "#">'+ data[index].content[i] +'</a>'
+						for(var i = 0 ; i < catagorylist[index-1].foods.length;i++){
+							html += '<a href = "#">'+ catagorylist[index-1].foods[i].name +'</a>'
 						}
 						$(".sub-list").html(html);												
 					}
@@ -305,24 +308,24 @@ define(function(){
 					
 				}else{
 					$.ajax({
-						url:"http://datainfo.duapp.com/shopdata/userinfo.php",
-						type:"get",
+						url:"http://127.0.0.1:8080/foodshop/api/login",
+						type:"post",
 						data:{
-							status:"login",
-							userID:$("#UserName").val(),
+							username:$("#UserName").val(),
 							password:$("#Pwd").val()
 						},
 						
 						success:function(data){
 
-							if(data == 0){
-								$("#msg-error").show().html("用户名不存在");
-							}else if(data == 1){
-								$("#msg-error").show().html("用户名密码不符");
+							if(data['code'] != 401){
+								$("#msg-error").show().html("用户名登录失败");
 							}else{
-								alert("登录成功");
+								// alert("登录成功");
 								$("#VerifyCode").add($("#UserName")).add($("#Pwd")).val("");
 								$("#login").css("display","none");
+                                self.location='http://127.0.0.1:8080/foodshop/buyer/index';
+
+
 							}
 						}
 					})
@@ -428,13 +431,16 @@ define(function(){
 								 	status = true;
 								 }
 							 },
-						 })
-					if(status){
-                        $("#Phone_Mobile").next().html("手机号正确").attr("class","pass-succ");
-                        $("#Phone_Mobile").attr("isYes","true");
-					}else {
-                        $("#Phone_Mobile").next().html("该用户已注册").attr("class","pass-error");
-					}
+							 error:function () {
+								 alert("错误")
+							 }
+							 })
+							if(status){
+								$("#Phone_Mobile").next().html("手机号正确").attr("class","pass-succ");
+								$("#Phone_Mobile").attr("isYes","true");
+							}else {
+								$("#Phone_Mobile").next().html("该用户已注册").attr("class","pass-error");
+							}
 
 			 	}else{
 			 		$("#Phone_Mobile").next().html("请输入正确的手机号").attr("class","pass-error");
@@ -494,13 +500,32 @@ define(function(){
 					$("#Phone_ConfimPassword").next().html("密码确认不正确").attr("class","pass-error");
 				
 				}else{
+                    var phone = $("#Phone_Mobile").val();
+                    var password = $("#Phone_Password").val();
+                    //check数据以后 提交到后台Controller
+                    $.ajax({
+                        url:"http://127.0.0.1:8080/foodshop/api/register",
+                        type: 'POST',
+                        async: false,
+                        data: {"username":phone,'password':password},
+                        timeout: 3000,
+                        dataType: 'json',
+                        success: function(data){
+                            console.log(data['code']);
+                            if(data['code']=='301'){
+                                alert(data['message'])
+                                $(".register").css("display","none");
+                                $(".pass-error").add($(".pass-succ")).html("");
+                                $(".register").find("input").val('');
+                                // self.location='http://127.0.0.1:8080/foodshop/buyer/index';
+
+                            } else{
+                                alert(data['message'])
+                            }
+                        },
+                    })
 
 
-					alert("注册成功");
-
-					$(".register").css("display","none");
-					$(".pass-error").add($(".pass-succ")).html("");
-					$(".register").find("input").val('');
 				}
 			})
 
@@ -539,6 +564,8 @@ define(function(){
 					regDiv.innerHTML = 
 						'<form >'
 							+'<p class="turnoff">x</p>'
+
+                            +'<strong>欢迎注册</strong>'
 						    +'<p>'
 						       + '<span class="field-name">图形验证码</span>'
 						       + '<input id="verficode_tab1" placeholder="图形验证码" class="input input-yzm" type="text" >'
@@ -573,7 +600,23 @@ define(function(){
 
 		})();
 
+        $("#Logout").click(function(){
+            $.ajax({
+                url:"http://127.0.0.1:8080/foodshop/api/logout",
+                type: 'GET',
+                async: false,
+                timeout: 3000,
+                dataType: 'json',
+                success: function(data){
+                    if(data['code']==501){
+                        self.location='http://127.0.0.1:8080/foodshop/buyer/index';
+                    }else {
+                        self.location='http://127.0.0.1:8080/foodshop/buyer/index';
+                    }
+                },
+            })
 
+        });
 	}
 
 	//计数
@@ -671,10 +714,14 @@ define(function(){
 				// createCartPopup();
 			})
 		}
+
 	return{
 		public:public,
 		cartCount:cartCount,
 		getvalue:getvalue,
 		createCartPopup:createCartPopup
 	}
+
+
+
 })
